@@ -5,6 +5,7 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"taskr/backend/models"
+	"slices"
 )
 
 // Struct com coleção de "tarefas"
@@ -25,12 +26,17 @@ func NovoGerenciadorTarefas() *GerenciadorTarefas {
 
 // Início: CRUD
 
-func (g *GerenciadorTarefas) CriarTarefa(c *gin.Context, descricao string) {
-	novaTarefa := models.Tarefa{
-		Id:        g.proximoID,
-		Descricao: descricao,
-		Feita:     false,
+func (g *GerenciadorTarefas) CriarTarefa(c *gin.Context) {
+	var novaTarefa models.Tarefa
+
+	// Tratamento de erros na requisição
+	if err := c.ShouldBindJSON(&novaTarefa); err != nil {
+		c.JSON(400, gin.H{"erro": "JSON inválido"})
+		return
 	}
+
+	novaTarefa.Id = g.proximoID
+	novaTarefa.Feita = false
 
 	g.Tarefas[novaTarefa.Id] = novaTarefa
 	g.Ids = append(g.Ids, novaTarefa.Id)
@@ -42,11 +48,17 @@ func (g *GerenciadorTarefas) CriarTarefa(c *gin.Context, descricao string) {
 
 func (g *GerenciadorTarefas) DeletarTarefa(c *gin.Context, id int) {
 
+	// Tratamento de erros na requisição
+	if _, existe := g.Tarefas[id]; !existe {
+		c.JSON(404, gin.H{"erro": "Tarefa não encontrada"})
+		return
+	}
+
 	delete(g.Tarefas, id)
 
 	for i, j := range g.Ids {
 		if j == id {
-			g.Ids = append(g.Ids[:i], g.Ids[i+1:]...)
+			g.Ids = slices.Delete(g.Ids, i, i+1)
 			break
 		}
 	}
@@ -55,12 +67,17 @@ func (g *GerenciadorTarefas) DeletarTarefa(c *gin.Context, id int) {
 }
 
 func (g *GerenciadorTarefas) ListarTarefas(c *gin.Context) {
-	for _, j := range g.Ids {
-		tarefa := g.Tarefas[j]
-		c.JSON(200, tarefa)
+	var tarefas []models.Tarefa
+	for _, id := range g.Ids {
+		tarefas = append(tarefas, g.Tarefas[id])
 	}
 
+	c.JSON(200, tarefas)
+	
 }
+
+/*
+Essa função será realizada depois
 
 func (g *GerenciadorTarefas) AtualizarTarefas(c *gin.Context, id int, descricao string) {
 	tarefa := g.Tarefas[id]
@@ -72,7 +89,12 @@ func (g *GerenciadorTarefas) AtualizarTarefas(c *gin.Context, id int, descricao 
 
 }
 
+*/
+
 // Fim: CRUD
+
+/*
+Essa função será realizada depois
 
 func (g *GerenciadorTarefas) MarcarConcluída(c *gin.Context, id int) {
 	tarefa := g.Tarefas[id]
@@ -82,3 +104,5 @@ func (g *GerenciadorTarefas) MarcarConcluída(c *gin.Context, id int) {
 
 	c.JSON(200, tarefa)
 }
+
+*/

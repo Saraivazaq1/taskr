@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"taskr/backend/controllers"
 	"taskr/backend/routes"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -11,9 +12,17 @@ func main() {
 	gerenciador := controllers.NovoGerenciadorTarefas()
 
 	// Instância do GIN
-	r := gin.Default()
+	router := gin.Default()
 	
+	// Definição de arquivos estáticos
+	router.Static("/frontend", "./frontend")
+	router.LoadHTMLFiles("frontend/index.html")
 
-	routes.ConfigurarRotas(r, gerenciador)
-	r.Run(":8080")
+	router.Static("/script", "./frontend/script")
+	// router.Static("/style", "./frontend/style") Depois será feito o CSS
+
+
+	routes.ConfigurarRotas(router, gerenciador)
+	
+	router.Run(":3001")
 }

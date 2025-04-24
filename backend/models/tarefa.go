@@ -1,9 +1,8 @@
 package models
 
-
 // Definição de tarefa
 type Tarefa struct {
-	Id        int
-	Descricao string
-	Feita     bool
+	Id        int    `json:"Id"`
+	Descricao string `json:"Descricao"`
+	Feita     bool   `json:"Feita"`
 }
