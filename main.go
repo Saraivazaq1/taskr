@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"taskr/controllers"
-	"taskr/routes"
+	"taskr/backend/controllers"
+	"taskr/backend/routes"
 )
 
 func main() {

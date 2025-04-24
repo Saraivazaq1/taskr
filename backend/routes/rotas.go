@@ -4,7 +4,7 @@ package routes
 
 import (
 	"strconv"
-	"taskr/controllers"
+	"taskr/backend/controllers"
 
 	"github.com/gin-gonic/gin"
 )

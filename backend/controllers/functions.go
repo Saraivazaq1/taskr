@@ -4,7 +4,7 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"taskr/models"
+	"taskr/backend/models"
 )
 
 // Struct com coleção de "tarefas"
