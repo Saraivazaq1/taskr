@@ -4,8 +4,8 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"taskr/backend/models"
 	"slices"
+	"taskr/backend/models"
 )
 
 // Struct com coleção de "tarefas"
@@ -73,11 +73,8 @@ func (g *GerenciadorTarefas) ListarTarefas(c *gin.Context) {
 	}
 
 	c.JSON(200, tarefas)
-	
-}
 
-/*
-Essa função será realizada depois
+}
 
 func (g *GerenciadorTarefas) AtualizarTarefas(c *gin.Context, id int, descricao string) {
 	tarefa := g.Tarefas[id]
@@ -89,20 +86,4 @@ func (g *GerenciadorTarefas) AtualizarTarefas(c *gin.Context, id int, descricao 
 
 }
 
-*/
-
 // Fim: CRUD
-
-/*
-Essa função será realizada depois
-
-func (g *GerenciadorTarefas) MarcarConcluída(c *gin.Context, id int) {
-	tarefa := g.Tarefas[id]
-	tarefa.Feita = true
-
-	g.Tarefas[id] = tarefa
-
-	c.JSON(200, tarefa)
-}
-
-*/

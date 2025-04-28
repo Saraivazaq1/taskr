@@ -26,8 +26,33 @@ async function carregarTarefas() {
             });
             carregarTarefas(); // Recarrega a lista após deletar
         });
-
+        
         // Construção da função de deletar tarefa: Fim
+
+        // Construção do botão de edição da tarefa: Ínicio
+        const botaoEditar = document.createElement("button");
+        botaoEditar.textContent = "Editar";
+
+        botaoEditar.addEventListener("click", async () => {
+            const novoTexto = prompt("Digite a nova descrição:", tarefa.Descricao);
+
+            if (novoTexto && novoTexto.trim() !== "") {
+                const response = await fetch(`http://localhost:3000/editar?id=${tarefa.Id}&descricao=${encodeURIComponent(novoTexto)}`, {
+                    method: "PUT",
+                });
+
+                if (response.ok) {
+                    console.log("Tarefa atualizada com sucesso");
+                    carregarTarefas();
+                } else {
+                    console.error("Erro ao atualizar tarefa");
+                }
+            }
+        });
+
+        // Contrução do botão de edição da tarefa: Fim
+
+        li.appendChild(botaoEditar);
 
         li.appendChild(botaoDeletar)
 

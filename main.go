@@ -19,7 +19,7 @@ func main() {
 	router.LoadHTMLFiles("frontend/index.html")
 
 	router.Static("/script", "./frontend/script")
-	// router.Static("/style", "./frontend/style") Depois será feito o CSS
+	router.Static("/style", "./frontend/style")
 
 
 	routes.ConfigurarRotas(router, gerenciador)

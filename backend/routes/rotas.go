@@ -10,10 +10,10 @@ import (
 )
 
 func ConfigurarRotas(r *gin.Engine, g *controllers.GerenciadorTarefas) {
-	
+
 	// Rotas
 
-	r.GET("/", func (c *gin.Context)  {
+	r.GET("/", func(c *gin.Context) {
 		c.File("./frontend/index.html")
 	})
 
@@ -30,27 +30,12 @@ func ConfigurarRotas(r *gin.Engine, g *controllers.GerenciadorTarefas) {
 		id, _ := strconv.Atoi(query)
 		g.DeletarTarefa(c, id)
 	})
-/*
-Será atualizado depois de melhorar a função AtualizarTarefas() 
 
-r.PUT("/atualizar", func(c *gin.Context) {
-	queryId := c.Query("id")
-	descricao := c.Query("descricao")
-	id, _ := strconv.Atoi(queryId)
-	g.AtualizarTarefas(c, id, descricao)
-})
-
-*/
-
-/*
-A função ainda não foi atualizada para utilizar na API
-
-	r.PUT("/concluido", func(c *gin.Context) {
+	r.PUT("/editar", func(c *gin.Context) {
 		queryId := c.Query("id")
+		descricao := c.Query("descricao")
 		id, _ := strconv.Atoi(queryId)
-		g.MarcarConcluída(c, id)
+		g.AtualizarTarefas(c, id, descricao)
 	})
-
-*/
 
 }
